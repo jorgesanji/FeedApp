@@ -1,0 +1,47 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/ToolBarStyle"
+            app:theme="@style/ThemeToolbarItemsWhiteStyle">
+
+            <EditText
+                android:id="@+id/searchEditText"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/margin_mediun"
+                android:layout_marginRight="@dimen/margin_mediun"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:hint="@string/search_hint"
+                android:textColorHint="@color/pale_gray"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:background="@drawable/background_red_thumb" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <com.test.feed.ui.view.customviews.LoaderView
+            android:id="@+id/progress_lv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/loader_size"
+            android:indeterminate="true"
+            android:visibility="gone"/>
+
+        <FrameLayout
+            android:id="@+id/contentFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+</FrameLayout>
+

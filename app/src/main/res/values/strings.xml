@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FeedApp</string>
+    <string name="error_internet_connection">An internet connection error has occurred please try again later</string>
+    <string name="search_hint">Search by artists, songs, albums, genres ...</string>
+</resources>
