@@ -1,7 +1,7 @@
 package com.test.feed.ui.view.presenter.detail
 
 import android.app.Activity
-import com.test.feed.business.GetBookDetailTest
+import com.test.feed.data.model.Track
 import com.test.feed.ui.presenter.detail.DetailPresenter
 import com.test.feed.ui.presenter.home.HomePresenter
 import com.test.feed.ui.view.IONavigation
@@ -24,8 +24,6 @@ class DetailPresenterTest {
     @Mock
     lateinit private var mockAppNavigation: IONavigation
     @Mock
-    lateinit private var mockGetBookDetail: GetBookDetailTest
-    @Mock
     lateinit private var mockView: DetailPresenter.View
     @Mock
     lateinit private var mockActivity: Activity
@@ -34,7 +32,7 @@ class DetailPresenterTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this);
         given(mockView.activity).willReturn(mockActivity)
-        detailPresenter = DetailPresenter(mockAppNavigation, mockGetBookDetail)
+        detailPresenter = DetailPresenter(mockAppNavigation)
         detailPresenter.attachView(mockView)
     }
 
@@ -44,15 +42,9 @@ class DetailPresenterTest {
     }
 
     @Test
-    fun testPresenterGetMovies() {
+    fun testPresenterView() {
+        detailPresenter.track = Track()
         detailPresenter.getTrackDetail()
-        verify(mockView, atLeastOnce()).showLoading()
-    }
-
-    @Test
-    fun testGetFirstPage() {
-        mockGetBookDetail.id = 8
-        mockGetBookDetail.subscribe(null)
-        verify(mockGetBookDetail, atLeastOnce()).subscribe(null)
+        verify(mockView, atLeastOnce()).setDetailInfo(null,null,null,null,null,null,null,null)
     }
 }

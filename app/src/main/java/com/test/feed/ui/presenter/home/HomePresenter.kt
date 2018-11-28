@@ -15,8 +15,11 @@ import com.test.feed.ui.view.IONavigation
 class HomePresenter(appNavigation: IONavigation, private var getFeedUseCase: GetFeedUseCase) : PrensenterImpl<HomePresenter.View>(appNavigation), IODataSource<Track> {
 
     private var tracks: List<Track> = ArrayList()
+    private var tracksPresented: List<Track> = ArrayList()
     private var loading: Boolean = false
     private var total:Int? = 0
+    private var isTracksValid:Boolean  = false
+        get() { return tracks != null && !tracks.isEmpty()}
 
     interface View : Presenter.View {
         fun reloadData()
@@ -24,6 +27,7 @@ class HomePresenter(appNavigation: IONavigation, private var getFeedUseCase: Get
 
     fun getTracks(query:String) {
         tracks = ArrayList()
+        tracksPresented = ArrayList()
         view.reloadData()
         if (query.isEmpty()){
             return
@@ -42,6 +46,7 @@ class HomePresenter(appNavigation: IONavigation, private var getFeedUseCase: Get
             override fun onNext(response: SearchResult) {
                 super.onNext(response)
                 this@HomePresenter.tracks = response.results!!.toList()
+                this@HomePresenter.tracksPresented = response.results!!.toList()
                 this@HomePresenter.total = response.resultCount
                 this@HomePresenter.view.reloadData()
                 this@HomePresenter.view.hideLoading()
@@ -51,32 +56,37 @@ class HomePresenter(appNavigation: IONavigation, private var getFeedUseCase: Get
     }
 
     fun launchDetail(position: Int){
-        val track = tracks[position]
+        val track = tracksPresented[position]
         var bundle = Bundle()
         bundle.putParcelable(trackKey, track)
         appNavigation.launchDetail(bundle)
     }
 
+    fun removeSort(){
+        tracksPresented = tracks
+        view.reloadData()
+    }
+
     fun sortByDuration(){
-        if (tracks != null && !tracks.isEmpty()){
-            val tracksSortedByDuration = tracks.sortedWith(compareBy { it.trackTimeMillis })
-            tracks= tracksSortedByDuration
+        if (isTracksValid){
+            val tracksSortedByDuration = tracks.filter { track -> track.trackTimeMillis != null}.sortedWith(compareBy { it.trackTimeMillis })
+            tracksPresented = tracksSortedByDuration
             view.reloadData()
         }
     }
 
     fun sortByGenre(){
-        if (tracks != null && !tracks.isEmpty()){
-            val tracksSortedByDuration = tracks.sortedWith(compareBy { it.primaryGenreName })
-            tracks= tracksSortedByDuration
+        if (isTracksValid){
+            val tracksSortedByGenre = tracks.filter { track -> track.primaryGenreName != null}.sortedWith(compareBy { it.primaryGenreName })
+            tracksPresented = tracksSortedByGenre
             view.reloadData()
         }
     }
 
     fun sortByPrice(){
-        if (tracks != null && !tracks.isEmpty()){
-            val tracksSortedByDuration = tracks.sortedWith(compareBy { it.trackPrice })
-            tracks= tracksSortedByDuration
+        if (isTracksValid){
+            val tracksSortedByPrice = tracks.filter { track -> track.trackPrice != null}.sortedWith(compareBy { it.trackPrice })
+            tracksPresented = tracksSortedByPrice
             view.reloadData()
         }
     }
@@ -86,9 +96,9 @@ class HomePresenter(appNavigation: IONavigation, private var getFeedUseCase: Get
      */
 
     override val count: Int
-        get() = tracks.size
+        get() = tracksPresented.size
 
     override fun getItemAtPosition(position: Int): Track {
-        return tracks[position]
+        return tracksPresented[position]
     }
 }

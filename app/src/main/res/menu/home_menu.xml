@@ -8,6 +8,10 @@
         app:showAsAction="always">
 
          <menu>
+             <item
+                 android:id="@+id/no_sort_action"
+                 app:showAsAction="ifRoom"
+                 android:title="@string/sort_no_sort"/>
             <item
                 android:id="@+id/duration_action"
                 app:showAsAction="ifRoom"
@@ -19,7 +23,7 @@
             <item
                 android:id="@+id/price_action"
                 app:showAsAction="ifRoom"
-                android:title="@string/sort_pricetitle"/>
+                android:title="@string/sort_price_title"/>
         </menu>
     </item>
 </menu>

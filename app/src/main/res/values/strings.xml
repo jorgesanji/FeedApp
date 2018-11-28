@@ -7,5 +7,6 @@
     <string name="sort_action_title">SORT BY</string>
     <string name="sort_duration_title">DURATION</string>
     <string name="sort_genre_title">GENRE</string>
-    <string name="sort_pricetitle">PRICE</string>
+    <string name="sort_price_title">PRICE</string>
+    <string name="sort_no_sort">REMOVE SORT</string>
 </resources>

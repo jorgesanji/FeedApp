@@ -10,16 +10,16 @@ class SearchResult() : Parcelable{
     var resultCount:Int? =  0
 
     @SerializedName("results")
-    var results:Array<Track>? = null
+    var results:List<Track>? = null
 
     constructor(parcel: Parcel) : this() {
         resultCount = parcel.readValue(Int::class.java.classLoader) as? Int
-        results = parcel.createTypedArray(Track)
+        results = parcel.createTypedArrayList(Track)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(resultCount)
-        parcel.writeTypedArray(results, flags)
+        parcel.writeTypedList(results)
     }
 
     override fun describeContents(): Int {

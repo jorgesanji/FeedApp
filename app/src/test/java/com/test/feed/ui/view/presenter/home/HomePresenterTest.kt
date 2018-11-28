@@ -1,7 +1,7 @@
 package com.test.feed.ui.view.presenter.home
 
 import android.app.Activity
-import com.test.feed.business.GetBooksTestUseCase
+import com.test.feed.business.GetFeedTestUseCase
 import com.test.feed.ui.presenter.home.HomePresenter
 import com.test.feed.ui.view.IONavigation
 import org.junit.After
@@ -19,11 +19,13 @@ import org.powermock.modules.junit4.PowerMockRunner
 @PrepareForTest(HomePresenter::class)
 class HomePresenterTest {
 
+    val query = "Michael Jackson"
+
     lateinit private var homePresenter: HomePresenter
     @Mock
     lateinit private var mockAppNavigation: IONavigation
     @Mock
-    lateinit private var mockGetMovies: GetBooksTestUseCase
+    lateinit private var mockGetFeed: GetFeedTestUseCase
     @Mock
     lateinit private var mockView: HomePresenter.View
     @Mock
@@ -33,7 +35,7 @@ class HomePresenterTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this);
         given(mockView.activity).willReturn(mockActivity)
-        homePresenter = HomePresenter(mockAppNavigation, mockGetMovies)
+        homePresenter = HomePresenter(mockAppNavigation, mockGetFeed)
         homePresenter.attachView(mockView)
     }
 
@@ -43,17 +45,16 @@ class HomePresenterTest {
     }
 
     @Test
-    fun testPresenterGetMovies() {
+    fun testPresenterGetFeedQuery() {
         assert(homePresenter.count == 0){"Error size movie array"}
-        homePresenter.getBooks()
+        homePresenter.getTracks(query)
         verify(mockView, atLeastOnce()).showLoading()
     }
 
     @Test
-    fun testGetFirstPage() {
-        mockGetMovies.offset = 0
-        mockGetMovies.count = 10
-        mockGetMovies.subscribe(null)
-        verify(mockGetMovies, atLeastOnce()).subscribe(null)
+    fun testGetFeedQuery() {
+        mockGetFeed.query = query
+        mockGetFeed.subscribe(null)
+        verify(mockGetFeed, atLeastOnce()).subscribe(null)
     }
 }

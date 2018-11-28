@@ -17,7 +17,7 @@ class DetailPresenter(appNavigation: IONavigation) : PrensenterImpl<DetailPresen
                           releaseDate: String?, genre: String?, duration: String?, price: String?)
     }
 
-    lateinit  var track:Track
+    lateinit var track:Track
 
     fun getTrackDetail(){
         track = view.fragment.activity!!.intent.getParcelableExtra<Track>(trackKey)

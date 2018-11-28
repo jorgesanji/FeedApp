@@ -1,13 +1,13 @@
 package com.test.feed.ui.view.detail
 
 import android.content.Context
-import android.support.annotation.Nullable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.OnClick
+import butterknife.Optional
 import com.test.feed.R
 import com.test.feed.ui.utils.ImageLoader
 import com.test.feed.ui.view.base.BaseConstraintLayout
@@ -75,7 +75,7 @@ class DetailScreen(context: Context) : BaseConstraintLayout(context) {
         validate(price_tv)
     }
 
-    @Nullable
+    @Optional
     @OnClick(R.id.previewBt)
     protected fun previewPressed(){
         listener.trackPreviewPressed()

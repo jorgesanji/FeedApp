@@ -37,7 +37,9 @@ class HomeFragment : MVPFragment<HomePresenter, HomePresenter.View>(), HomePrese
     }
 
    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-       if (item.getItemId() == R.id.duration_action) {
+       if (item.getItemId() == R.id.no_sort_action) {
+           presenter.removeSort()
+       }else if (item.getItemId() == R.id.duration_action) {
             presenter.sortByDuration()
        }else if (item.getItemId() == R.id.genre_action) {
             presenter.sortByGenre()

@@ -4,6 +4,7 @@ import android.app.Application
 import android.support.test.InstrumentationRegistry.getInstrumentation
 import android.support.test.filters.LargeTest
 import android.support.test.runner.AndroidJUnit4
+import com.test.feed.data.model.SearchResult
 import com.test.feed.data.repository.RestRepository
 import com.test.feed.di.component.ApplicationComponent
 import com.test.feed.di.module.ApplicationModule
@@ -24,6 +25,8 @@ import java.util.*
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class HomeViewTest {
+
+    val query = "Michael Jackson"
 
     @Rule
     var daggerRule: DaggerMockRule<ApplicationComponent> = DaggerMockRule(
@@ -57,17 +60,11 @@ class HomeViewTest {
 
     @Test
     @Throws(Exception::class)
-    fun testGetBookItem() {
-        assert(homePresenter.getItemAtPosition(0) != null){"Error retrieving one element of the list"}
-        verify(homePresenter).getItemAtPosition(0)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun testGetBooks() {
-        val array = ArrayList<Book>()
-        val response = array.toTypedArray()
-        `when`(repository.getBookList(0, 10))
-                .thenReturn(Observable.just<Array<Book>>(response))
+    fun testGetFeed() {
+        val response = SearchResult()
+        response.resultCount = 0
+        response.results = ArrayList()
+        `when`(repository.getFeed(query))
+                .thenReturn(Observable.just<SearchResult>(response))
     }
 }

@@ -15,10 +15,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
-import rx.Observable
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -56,15 +54,7 @@ class DetailViewTest {
 
     @Test
     @Throws(Exception::class)
-    fun testGetBook() {
+    fun testGetTrackDetail() {
         verify(homePresenter).getTrackDetail()
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun testGetBookDetail() {
-        val book = Book()
-        `when`(repository.getBookDetail(8))
-                .thenReturn(Observable.just<Book>(book))
     }
 }

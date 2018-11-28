@@ -9,9 +9,9 @@ import android.widget.EditText
 import butterknife.BindView
 import butterknife.OnEditorAction
 import butterknife.OnTextChanged
+import butterknife.Optional
 import com.test.feed.R
 import com.test.feed.ui.view.base.BaseActivity
-import org.jetbrains.annotations.Nullable
 
 
 class HomeActivity : BaseActivity<HomeFragment>() {
@@ -41,7 +41,7 @@ class HomeActivity : BaseActivity<HomeFragment>() {
         imm.hideSoftInputFromWindow(searchEditext.getWindowToken(), 0)
     }
 
-    @Nullable
+    @Optional
     @OnEditorAction(value = R.id.searchEditText)
     protected fun imeItemPressed(actionId: Int) :Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -53,7 +53,7 @@ class HomeActivity : BaseActivity<HomeFragment>() {
         return false
     }
 
-    @Nullable
+    @Optional
     @OnTextChanged(value = R.id.searchEditText, callback = OnTextChanged.Callback.TEXT_CHANGED)
     protected fun editTextchanged(editable: Editable) {
         if(editable.toString().isEmpty()){

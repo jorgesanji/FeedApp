@@ -9,6 +9,9 @@ object FormatUtils {
 
     fun dateToString(date: Date?, context: Context): String {
         val dateFormat = android.text.format.DateFormat.getDateFormat(context)
+        if(dateFormat == null || date == null){
+            return ""
+        }
         return dateFormat.format(date)
     }
 
