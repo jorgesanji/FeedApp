@@ -12,6 +12,7 @@ import rx.subscriptions.Subscriptions
 interface BaseUseCase<K> {
     fun subscribeTest(subscriber: BaseSubscriber<K>?)
     fun subscribe(subscriber: BaseSubscriber<K>?)
+    fun unsubscribe()
 }
 
 abstract class BaseUseCaseImpl<K> : BaseUseCase<K> {
@@ -54,14 +55,7 @@ abstract class BaseUseCaseImpl<K> : BaseUseCase<K> {
         testScheduler.triggerActions()
     }
 
-    fun subscribe() {
-        this.subscription = this.buildUseCaseObservable().subscribeOn(subscriberScheduler)
-                .observeOn(observableScheduler).subscribe(object : BaseSubscriber<K>(null) {
-
-                })
-    }
-
-    fun unsubscribe() {
+    override fun unsubscribe() {
         if (subscription != null && !subscription!!.isUnsubscribed) {
             subscription!!.unsubscribe()
         }

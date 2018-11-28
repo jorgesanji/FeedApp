@@ -1,6 +1,8 @@
 package com.test.feed.ui.presenter.home
 
 import android.os.Bundle
+import android.widget.Toast
+import com.test.feed.R
 import com.test.feed.business.usecase.base.BaseSubscriber
 import com.test.feed.business.usecase.feed.GetFeedUseCase
 import com.test.feed.data.model.SearchResult
@@ -34,6 +36,7 @@ class HomePresenter(appNavigation: IONavigation, private var getFeedUseCase: Get
         }
         view.showLoading()
         getFeedUseCase.query = query
+        getFeedUseCase.unsubscribe()
         getFeedUseCase.subscribe(object : BaseSubscriber<SearchResult>() {
 
             override fun onError(apiError: ApiError) {
@@ -45,12 +48,16 @@ class HomePresenter(appNavigation: IONavigation, private var getFeedUseCase: Get
 
             override fun onNext(response: SearchResult) {
                 super.onNext(response)
+                this@HomePresenter.view.hideLoading()
+                this@HomePresenter.loading = false
+                if (response.resultCount == 0){
+                    Toast.makeText( this@HomePresenter.view.activity, view.activity.getString(R.string.error_search_empty), Toast.LENGTH_LONG).show()
+                    return
+                }
                 this@HomePresenter.tracks = response.results!!.toList()
                 this@HomePresenter.tracksPresented = response.results!!.toList()
                 this@HomePresenter.total = response.resultCount
                 this@HomePresenter.view.reloadData()
-                this@HomePresenter.view.hideLoading()
-                this@HomePresenter.loading = false
             }
         })
     }

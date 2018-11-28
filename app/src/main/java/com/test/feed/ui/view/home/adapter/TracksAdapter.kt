@@ -82,20 +82,27 @@ class TracksAdapter(dataSource: IODataSource<Track>) : RecyclerView.Adapter<Trac
             validate(song_title_tv)
             album_title_tv.text = track.collectionName
             validate(album_title_tv)
-            release_date_tv.text = FormatUtils.dateToString(track.releaseDate, itemView.context)
+            release_date_tv.text = null
+            if (track.releaseDate != null){
+                release_date_tv.text = itemView.context.getString(R.string.release_title, FormatUtils.dateToString(track.releaseDate, itemView.context))
+            }
             validate(release_date_tv)
-            genre_tv.text = track.primaryGenreName
+            genre_tv.text = null
+            if (track.primaryGenreName != null){
+                genre_tv.text = itemView.context.getString(R.string.genre_title, track.primaryGenreName)
+            }
             validate(genre_tv)
-            duration_tv.text = FormatUtils.millisToMinutes(track.trackTimeMillis, itemView.context)
+            duration_tv.text = null
+            if (track.trackTimeMillis != null){
+                duration_tv.text = itemView.context.getString(R.string.duration_title, FormatUtils.millisToMinutes(track.trackTimeMillis))
+            }
             validate(duration_tv)
             price_tv.text = null
-            var price = track.trackPrice
-            if (price != null){
-                price_tv.visibility = View.VISIBLE
-                price_tv.text = price.toString()+" "+track.currency
-            }else{
-                price_tv.visibility = View.GONE
+            if (track.trackPrice != null){
+                price_tv.text =  itemView.context.getString(R.string.price_title, track.trackPrice.toString()+" "+track.currency)
             }
+            validate(price_tv)
+
         }
     }
 }

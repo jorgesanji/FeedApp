@@ -2,6 +2,7 @@ package com.test.feed.ui.presenter.detail
 
 import android.content.Intent
 import android.net.Uri
+import com.test.feed.R
 import com.test.feed.data.model.Track
 import com.test.feed.ui.presenter.base.PrensenterImpl
 import com.test.feed.ui.presenter.base.Presenter
@@ -21,13 +22,25 @@ class DetailPresenter(appNavigation: IONavigation) : PrensenterImpl<DetailPresen
 
     fun getTrackDetail(){
         track = view.fragment.activity!!.intent.getParcelableExtra<Track>(trackKey)
+        val context = view.activity
+        var release_date:String? = null
+        if (track.releaseDate != null){
+            release_date = context.getString(R.string.release_title, FormatUtils.dateToString(track.releaseDate, context))
+        }
+        var primaryGenreName:String? = null
+        if (track.primaryGenreName != null){
+            primaryGenreName= context.getString(R.string.genre_title, track.primaryGenreName)
+        }
+        var duration:String? = null
+        if (track.trackTimeMillis != null){
+            duration = context.getString(R.string.duration_title, FormatUtils.millisToMinutes(track.trackTimeMillis))
+        }
         var price:String? = null
         if (track.trackPrice != null){
-            price = track.trackPrice.toString()+" "+track.currency
+            price =  context.getString(R.string.price_title, track.trackPrice.toString()+" "+track.currency)
         }
         view.setDetailInfo(track.artworkUrl100, track.artistName, track.trackName, track.collectionName,
-                FormatUtils.dateToString(track.releaseDate, view.activity), track.primaryGenreName,
-                FormatUtils.millisToMinutes(track.trackTimeMillis, view.activity), price)
+                release_date, primaryGenreName, duration, price)
     }
 
     fun trackPreview(){

@@ -49,7 +49,7 @@ class HomeFragment : MVPFragment<HomePresenter, HomePresenter.View>(), HomePrese
        return super.onOptionsItemSelected(item)
    }
 
-    fun searchText(query: String) {
+    fun queryText(query: String) {
         presenter.getTracks(query)
     }
 

@@ -2,19 +2,16 @@ package com.test.feed.ui.view.home
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
+import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import butterknife.BindView
-import butterknife.OnEditorAction
-import butterknife.OnTextChanged
-import butterknife.Optional
 import com.test.feed.R
 import com.test.feed.ui.view.base.BaseActivity
 
-
-class HomeActivity : BaseActivity<HomeFragment>() {
+class HomeActivity : BaseActivity<HomeFragment>(), TextView.OnEditorActionListener {
 
     @BindView(R.id.searchEditText)
     lateinit var searchEditext: EditText
@@ -26,6 +23,7 @@ class HomeActivity : BaseActivity<HomeFragment>() {
         customLayout = R.layout.activity_home_lay
        super.onCreate(savedInstanceState)
         supportActionBar!!.setIcon(R.mipmap.ic_launcher)
+        searchEditext.setOnEditorActionListener(this)
     }
 
     override fun toolbarColor(): Int {
@@ -41,23 +39,12 @@ class HomeActivity : BaseActivity<HomeFragment>() {
         imm.hideSoftInputFromWindow(searchEditext.getWindowToken(), 0)
     }
 
-    @Optional
-    @OnEditorAction(value = R.id.searchEditText)
-    protected fun imeItemPressed(actionId: Int) :Boolean {
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            val searchEditText = this.findViewById<EditText>(R.id.searchEditText)
-            currentFragment!!.searchText(searchEditText.text.toString())
+            currentFragment!!.queryText(searchEditext.text.toString())
             closeKeyboard()
             return true
         }
         return false
-    }
-
-    @Optional
-    @OnTextChanged(value = R.id.searchEditText, callback = OnTextChanged.Callback.TEXT_CHANGED)
-    protected fun editTextchanged(editable: Editable) {
-        if(editable.toString().isEmpty()){
-            currentFragment!!.searchText("")
-        }
     }
 }

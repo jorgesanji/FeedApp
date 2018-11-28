@@ -1,12 +1,17 @@
 <resources>
     <string name="app_name">FeedApp</string>
+    <string name="error_search_empty">No found results, please try again with other search</string>
     <string name="error_internet_connection">An internet connection error has occurred please try again later</string>
     <string name="search_hint">Search by artists, songs, albums, genres ...</string>
-    <string name="time_min">%s min</string>
-    <string name="detail_preview_text">Preview</string>
+    <string name="detail_preview_text">Listen preview</string>
     <string name="sort_action_title">SORT BY</string>
     <string name="sort_duration_title">DURATION</string>
     <string name="sort_genre_title">GENRE</string>
     <string name="sort_price_title">PRICE</string>
     <string name="sort_no_sort">REMOVE SORT</string>
+    <string name="genre_title">Genre: %s</string>
+    <string name="release_title">Release date: %s</string>
+    <string name="duration_title">Duration: %s min</string>
+    <string name="price_title">Price: %s</string>
+
 </resources>
