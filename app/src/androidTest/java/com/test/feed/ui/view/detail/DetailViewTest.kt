@@ -57,7 +57,7 @@ class DetailViewTest {
     @Test
     @Throws(Exception::class)
     fun testGetBook() {
-        verify(homePresenter).getBookDetail()
+        verify(homePresenter).getTrackDetail()
     }
 
     @Test

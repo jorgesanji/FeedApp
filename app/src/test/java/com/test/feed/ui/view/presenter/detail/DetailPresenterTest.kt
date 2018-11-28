@@ -45,7 +45,7 @@ class DetailPresenterTest {
 
     @Test
     fun testPresenterGetMovies() {
-        detailPresenter.getBookDetail()
+        detailPresenter.getTrackDetail()
         verify(mockView, atLeastOnce()).showLoading()
     }
 

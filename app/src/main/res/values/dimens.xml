@@ -3,7 +3,7 @@
 
     <dimen name="loader_size">2dp</dimen>
     <dimen name="thumb_size">60dp</dimen>
-    <dimen name="row_size">50dp</dimen>
+    <dimen name="row_size">250dp</dimen>
     <dimen name="detail_image_size">300dp</dimen>
 
     <!-- Margins-->

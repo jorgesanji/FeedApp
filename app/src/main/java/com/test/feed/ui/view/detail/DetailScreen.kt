@@ -1,50 +1,83 @@
 package com.test.feed.ui.view.detail
 
 import android.content.Context
+import android.support.annotation.Nullable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
+import butterknife.OnClick
 import com.test.feed.R
 import com.test.feed.ui.utils.ImageLoader
 import com.test.feed.ui.view.base.BaseConstraintLayout
-import com.test.feed.ui.view.customviews.LoaderView
 
 class DetailScreen(context: Context) : BaseConstraintLayout(context) {
 
-    @BindView(R.id.bookIv)
-    protected lateinit var bookIv: ImageView
+    interface Listener {
+        fun trackPreviewPressed()
+    }
 
-    @BindView(R.id.bookTitleTv)
-    protected lateinit var movieTitleTv: TextView
+    lateinit var listener: Listener
 
-    @BindView(R.id.bookDescritionTv)
-    protected lateinit var movieDescritionTv: TextView
+    @BindView(R.id.coverIv)
+    protected lateinit var cover_iv: ImageView
 
-    @BindView(R.id.bookPriceTv)
-    protected lateinit var bookPriceTv: TextView
+    @BindView(R.id.nameArtistTv)
+    protected lateinit var name_artist_Tv: TextView
 
-    @BindView(R.id.progress_lv)
-    protected lateinit var loaderView: LoaderView
+    @BindView(R.id.songtitleTv)
+    protected lateinit var song_title_tv: TextView
 
-    override val layout: Int get() = R.layout.lay_detail
+    @BindView(R.id.albumTitleTv)
+    protected lateinit var album_title_tv: TextView
+
+    @BindView(R.id.releaseDateTv)
+    protected lateinit var release_date_tv: TextView
+
+    @BindView(R.id.genreTv)
+    protected lateinit var genre_tv: TextView
+
+    @BindView(R.id.durationTv)
+    protected lateinit var duration_tv: TextView
+
+    @BindView(R.id.priceTv)
+    protected lateinit var price_tv: TextView
+
+    override val layout: Int get() = R.layout.lay_track_detail
 
     override fun initUI(attributeSet: AttributeSet?) {}
 
-    fun setInfo(title: String?, author: String?, price: String?, image: String?) {
-        ImageLoader.loadBackground(bookIv, image)
-        movieTitleTv.text = title
-        movieDescritionTv.text = author
-        bookPriceTv.text = price
+    private fun validate(textView: TextView){
+        if (textView.text == null || textView.text.isEmpty()){
+            textView.visibility = View.GONE
+        }else{
+            textView.visibility = View.VISIBLE
+        }
     }
 
-    fun showLoading() {
-        loaderView.visibility = View.VISIBLE
+    fun setDetailInfo(coverUrl:String?, artistName:String?, trackName:String?, collectionName:String?,
+                      releaseDate:String?, genre:String?, duration:String?, price:String?){
+        ImageLoader.loadBackground(cover_iv, coverUrl)
+        name_artist_Tv.text = artistName
+        validate(name_artist_Tv)
+        song_title_tv.text = trackName
+        validate(song_title_tv)
+        album_title_tv.text = collectionName
+        validate(album_title_tv)
+        release_date_tv.text = releaseDate
+        validate(release_date_tv)
+        genre_tv.text = genre
+        validate(genre_tv)
+        duration_tv.text = duration
+        validate(duration_tv)
+        price_tv.text = price
+        validate(price_tv)
     }
 
-    fun hideLoading() {
-        loaderView.visibility = View.GONE
+    @Nullable
+    @OnClick(R.id.previewBt)
+    protected fun previewPressed(){
+        listener.trackPreviewPressed()
     }
-
 }

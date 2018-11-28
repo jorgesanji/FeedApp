@@ -8,7 +8,6 @@
         <item name="colorControlActivated">@android:color/white</item>
         <item name="colorControlHighlight">@android:color/white</item>
         <!-- colorPrimaryDark is used for the status bar -->
-        <!--<item name="colorPrimary">@color/tinker</item>-->
         <item name="colorPrimaryDark">@android:color/holo_blue_dark</item>
         <!-- Subtitle color -->
         <item name="android:textColorSecondary">@android:color/white</item>

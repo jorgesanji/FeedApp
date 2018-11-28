@@ -33,9 +33,9 @@ abstract class BaseActivity<F : MVPFragment<*, *>> : AppCompatActivity() {
 
     @BindView(R.id.toolbar)
     lateinit var toolbar: Toolbar
-
     @BindView(R.id.progress_lv)
     lateinit var loaderView: LoaderView
+
 
     abstract fun toolbarColor(): Int
 

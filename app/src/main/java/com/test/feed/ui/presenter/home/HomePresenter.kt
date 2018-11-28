@@ -57,6 +57,30 @@ class HomePresenter(appNavigation: IONavigation, private var getFeedUseCase: Get
         appNavigation.launchDetail(bundle)
     }
 
+    fun sortByDuration(){
+        if (tracks != null && !tracks.isEmpty()){
+            val tracksSortedByDuration = tracks.sortedWith(compareBy { it.trackTimeMillis })
+            tracks= tracksSortedByDuration
+            view.reloadData()
+        }
+    }
+
+    fun sortByGenre(){
+        if (tracks != null && !tracks.isEmpty()){
+            val tracksSortedByDuration = tracks.sortedWith(compareBy { it.primaryGenreName })
+            tracks= tracksSortedByDuration
+            view.reloadData()
+        }
+    }
+
+    fun sortByPrice(){
+        if (tracks != null && !tracks.isEmpty()){
+            val tracksSortedByDuration = tracks.sortedWith(compareBy { it.trackPrice })
+            tracks= tracksSortedByDuration
+            view.reloadData()
+        }
+    }
+
     /**
      * Datasource
      */

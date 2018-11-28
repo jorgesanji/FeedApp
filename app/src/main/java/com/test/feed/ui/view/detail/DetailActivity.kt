@@ -15,7 +15,7 @@ class DetailActivity : BaseActivity<DetailFragment>() {
     }
 
     override fun toolbarColor(): Int {
-        return R.color.pale_gray
+        return R.color.red
     }
 
     override fun centerTitle(): Boolean {

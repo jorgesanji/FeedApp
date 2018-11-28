@@ -11,9 +11,8 @@ object ImageLoader {
         loadImage(imageView, url, null, false, false)
     }
 
-    fun loadImageFromPath(imageView: ImageView, path:String?){
-        val file = File(path)
-        loadImage(imageView, file, null, false, false)
+    fun loadCircularImage(imageView: ImageView, url:String?){
+        loadImage(imageView, url, null, true, false)
     }
 
     private fun loadImage(imageView: ImageView, image: Any?, placeHolder:Int?, roundCorners:Boolean = true, resize:Boolean = true) {
@@ -27,7 +26,7 @@ object ImageLoader {
             creator.placeholder(placeHolder)
         }
         if (roundCorners){
-            creator.transform(RoundCornersTransform(false))
+            creator.transform(RoundCornersTransform(true))
         }
         if(resize){
             creator.fit()

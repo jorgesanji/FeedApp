@@ -1,36 +1,37 @@
 package com.test.feed.ui.presenter.detail
 
+import android.content.Intent
+import android.net.Uri
+import com.test.feed.data.model.Track
 import com.test.feed.ui.presenter.base.PrensenterImpl
 import com.test.feed.ui.presenter.base.Presenter
+import com.test.feed.ui.utils.BundleConstants.trackKey
+import com.test.feed.ui.utils.FormatUtils
 import com.test.feed.ui.view.IONavigation
+
 
 class DetailPresenter(appNavigation: IONavigation) : PrensenterImpl<DetailPresenter.View>(appNavigation) {
 
     interface View : Presenter.View {
-        fun setInfo(title:String?, author:String?, price: String?, image:String?)
+        fun setDetailInfo(coverUrl: String?, artistName: String?, trackName: String?, collectionName: String?,
+                          releaseDate: String?, genre: String?, duration: String?, price: String?)
     }
 
-    fun getBookDetail(){
-        /*view.showLoading()
-        val bookId = view.fragment.activity!!.intent.extras[bookIdKey] as? Int
-        val bookName = view.fragment.activity!!.intent.extras[bookNameKey] as? String
-        view.activity.setTitle(bookName)
-        getBookDetailUseCase.id = bookId!!
-        getBookDetailUseCase.subscribe(object : BaseSubscriber<Book>(){
+    lateinit  var track:Track
 
-            override fun onError(apiError: ApiError) {
-                super.onError(apiError)
-                this@DetailPresenter.view.hideLoading()
-                this@DetailPresenter.view.showInternetConnectionError()
-            }
+    fun getTrackDetail(){
+        track = view.fragment.activity!!.intent.getParcelableExtra<Track>(trackKey)
+        var price:String? = null
+        if (track.trackPrice != null){
+            price = track.trackPrice.toString()+" "+track.currency
+        }
+        view.setDetailInfo(track.artworkUrl100, track.artistName, track.trackName, track.collectionName,
+                FormatUtils.dateToString(track.releaseDate, view.activity), track.primaryGenreName,
+                FormatUtils.millisToMinutes(track.trackTimeMillis, view.activity), price)
+    }
 
-            override fun onNext(book: Book) {
-                super.onNext(book)
-                val currency = Currency.getInstance(Locale.getDefault())
-                val value = String.format("%s%s", NumberFormat.getInstance(Locale.getDefault()).format(book.price), currency.symbol)
-                this@DetailPresenter.view.setInfo(book.title, book.author, value, book.image)
-                this@DetailPresenter.view.hideLoading()
-            }
-        })*/
+    fun trackPreview(){
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(track.previewUrl))
+        view.activity.startActivity(browserIntent)
     }
 }

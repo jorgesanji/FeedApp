@@ -3,6 +3,7 @@ package com.test.feed.data.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 class Track() : Parcelable{
 
@@ -63,6 +64,9 @@ class Track() : Parcelable{
     @SerializedName("currency")
     var currency:String? = null
 
+    @SerializedName("releaseDate")
+    var releaseDate:Date? = null
+
     constructor(parcel: Parcel) : this() {
         wrapperType = parcel.readString()
         kind = parcel.readString()
@@ -83,6 +87,8 @@ class Track() : Parcelable{
         trackTimeMillis = parcel.readValue(Long::class.java.classLoader) as? Long
         trackPrice = parcel.readValue(Double::class.java.classLoader) as? Double
         currency = parcel.readString()
+        releaseDate = parcel.readSerializable() as? Date
+
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -105,6 +111,7 @@ class Track() : Parcelable{
         parcel.writeValue(trackTimeMillis)
         parcel.writeValue(trackPrice)
         parcel.writeString(currency)
+        parcel.writeSerializable(releaseDate)
     }
 
     override fun describeContents(): Int {
@@ -120,5 +127,4 @@ class Track() : Parcelable{
             return arrayOfNulls(size)
         }
     }
-
 }
